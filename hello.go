@@ -86,6 +86,45 @@ func day4maps() {
 	}
 }
 
+func day5palindrome() {
+	word := "madam"
+	isPalindrome := true
+	for i := 0; i < len(word)/2; i++ {
+		if word[i] != word[len(word)-1-i] {
+			isPalindrome = false
+			break
+		}
+	}
+	if isPalindrome {
+		fmt.Println(word, "is a palindrome")
+	} else {
+		fmt.Println(word, "is not a palindrome")
+	}
+}
+
+func day5fibonacci() {
+	n := 10
+	a, b := 0, 1
+	fmt.Print("Fibonacci series: ")
+	for i := 0; i < n; i++ {
+		fmt.Print(a, " ")
+		a, b = b, a+b
+	}
+	fmt.Println()
+}
+
+func day5maxnumarray() {
+	arr := []int{3, 5, 2, 8, 1}
+	max := arr[0]
+	for i, z := range arr {
+		if z > max {
+			max = z
+		}
+		fmt.Println("Index:", i, "Value:", z)
+	}
+	fmt.Println("Maximum number in array is:", max)
+}
+
 func main() {
 	day1Hello()
 	day2()
@@ -97,4 +136,7 @@ func main() {
 	day3switch()
 	day4slices()
 	day4maps()
+	day5palindrome()
+	day5fibonacci()
+	day5maxnumarray()
 }
