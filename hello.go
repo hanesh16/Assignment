@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
 func day1Hello() {
 	fmt.Println("Hello, world!")
@@ -125,6 +129,80 @@ func day5maxnumarray() {
 	fmt.Println("Maximum number in array is:", max)
 }
 
+func day6goroutine() {
+	go func() {
+		fmt.Println("Hello from goroutine!")
+	}()
+
+	fmt.Println("Hello from main!")
+
+	time.Sleep(100 * time.Millisecond)
+}
+
+func day6waitgroup() {
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		for i := 1; i <= 5; i++ {
+			fmt.Println("Number:", i)
+		}
+		wg.Done()
+	}()
+
+	go func() {
+		letters := []string{"A", "B", "C", "D", "E"}
+		for _, letter := range letters {
+			fmt.Println("Letter:", letter)
+		}
+		wg.Done()
+	}()
+
+	wg.Wait()
+	fmt.Println("Both goroutines finished")
+}
+
+func day6channel() {
+
+	go func() {
+		for i := 1; i <= 5; i++ {
+			fmt.Println("Number from goroutine:", i)
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
+
+	time.Sleep(600 * time.Millisecond)
+	fmt.Println("Done printing numbers")
+}
+
+func day6timeout() {
+
+	go func() {
+		time.Sleep(3 * time.Second)
+		fmt.Println("Task completed after 3 seconds")
+	}()
+
+	time.Sleep(2 * time.Second)
+	fmt.Println("Main gave up waiting (timeout)")
+}
+
+func day6worker() {
+	var result int
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+
+	go func() {
+		number := 5
+		result = number * 2
+		fmt.Println("Worker calculated:", result)
+		wg.Done()
+	}()
+
+	wg.Wait()
+	fmt.Println("Final result:", result)
+}
+
 func main() {
 	day1Hello()
 	day2()
@@ -139,4 +217,9 @@ func main() {
 	day5palindrome()
 	day5fibonacci()
 	day5maxnumarray()
+	day6goroutine()
+	day6waitgroup()
+	day6channel()
+	day6timeout()
+	day6worker()
 }
